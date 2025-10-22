@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practical AI for Working Professionals – HYPER ONE Academy</title>
+<meta name="description" content="Khóa học AI thực chiến dành cho người đi làm: Tư duy hệ thống, bản chất AI, kiểm soát dữ liệu và tự động hóa quy trình.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="assets/css/theme.css">
+<style>
+/* ===== CONFIDENTIAL WATERMARK ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    repeating-linear-gradient(-30deg, rgba(255,0,0,0.07) 0 2px, transparent 2px 80px),
+    repeating-linear-gradient(30deg, rgba(255,0,0,0.07) 0 2px, transparent 2px 80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "CONFIDENTIAL • INTERNAL USE ONLY • HYPER ONE   CONFIDENTIAL • INTERNAL USE ONLY • HYPER ONE";
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3.8vw;
+  font-weight: 700;
+  color: rgba(255,0,0,0.14);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: rotate(-25deg);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+  animation: dangerGlow 4s ease-in-out infinite alternate;
+}
+@keyframes dangerGlow {
+  from { opacity: 0.13; text-shadow: 0 0 6px rgba(255,0,0,0.25); }
+  to   { opacity: 0.18; text-shadow: 0 0 20px rgba(255,0,0,0.4); }
+}
+
+/* ===== corner warning ===== */
+.notice {
+  position: fixed;
+  font-size: 11px;
+  color: #ff2d55;
+  opacity: 0.45;
+  font-family: "Share Tech Mono", monospace;
+  z-index: 5;
+  pointer-events: none;
+}
+.notice.tl { top: 10px; left: 12px; transform: rotate(-2deg); }
+.notice.tr { top: 10px; right: 12px; transform: rotate(2deg); }
+.notice.bl { bottom: 10px; left: 12px; transform: rotate(1deg); }
+.notice.br { bottom: 10px; right: 12px; transform: rotate(-1deg); }
+
+.watermark {
+  position: fixed;
+  right: 12px;
+  bottom: 10px;
+  opacity: 0.45;
+  font-size: 12px;
+  color: #ff2d55;
+  pointer-events: none;
+}
+</style>
+</head>
+
+<body>
+<canvas id="ai-canvas" aria-hidden="true"></canvas>
+<div class="blob" style="top:-10vmax; left:-8vmax"></div>
+<div class="blob b2" style="bottom:-12vmax; right:-10vmax"></div>
+<div class="blob b3" style="top:20vh; right:-14vmax"></div>
+
+<!-- security corners -->
+<div class="notice tl">⚠ CONFIDENTIAL // HYPER ONE ACADEMY</div>
+<div class="notice tr">SYSTEM ACCESS • NDA PROTECTED</div>
+<div class="notice bl">DATA • MODEL • CONTROL INTEGRITY</div>
+<div class="notice br">AI LITERACY • SYSTEM THINKING • BUSINESS RESULT</div>
+
+<header class="container" style="padding:18px 0; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2">
+  <div class="pill">HYPER ONE Academy</div>
+  <nav style="display:flex; gap:14px">
+    <a class="pill" href="#philosophy">Tư duy nền</a>
+    <a class="pill" href="#roadmap">Lộ trình 4 tuần</a>
+    <a class="pill" href="#outcome">Kết quả</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="ring"></div>
+  <div class="container" style="display:grid; gap:20px; align-items:center; grid-template-columns:1.1fr .9fr">
+    <div>
+      <span class="pill">🎓 Practical AI for Working Professionals</span>
+      <h1 style="font-size:clamp(28px,5vw,48px); line-height:1.12; margin-top:12px">
+        Tư Duy Hệ Thống Trong Thời Đại AI<br>
+        <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; color:transparent">
+          Hiểu AI để kiểm soát – không bị điều khiển
+        </span>
+      </h1>
+      <p class="muted" style="margin:8px 0 16px">
+        Khóa học 4 tuần dành cho người đi làm. Không dạy code, mà dạy <b>tư duy hệ thống</b>, 
+        <b>bản chất AI</b> và <b>cách ra quyết định dữ liệu</b> trong môi trường tự động hoá.
+      </p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap">
+        <a class="btn" href="#roadmap">Xem lộ trình</a>
+        <a class="btn ghost" href="lessons/lesson1.html">Truy cập bài học đầu tiên</a>
+      </div>
+      <div style="margin-top:18px; font-size:14px; color:var(--muted)">
+        <b>System → Business → AI → Result</b><br>
+        Tư duy kết nối – Xây hệ thống bền vững. Literacy → Action → Control.
+      </div>
+    </div>
+
+    <div class="card" style="min-height:280px; display:grid; place-items:center">
+      <svg width="100%" height="220" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#ff2d55"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
+        <g fill="none" stroke="url(#g1)" stroke-width="1.6">
+          <path d="M20,110 C120,40 240,180 340,110 420,60 500,150 580,110"/>
+          <path d="M20,140 C140,80 240,140 340,80 440,30 520,180 580,150"/>
+          <path d="M20,80  C120,140 240,60  340,140 440,170 520,70  580,90"/>
+        </g>
+      </svg>
+      <div class="muted" style="font-size:13px">System Flow • Neural Thinking • Human in Control</div>
+    </div>
+  </div>
+</section>
+
+<section id="philosophy" class="section">
+  <div class="container grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+    <div class="card">
+      <h3>🧠 System Thinking</h3>
+      <p class="muted">
+        Không bắt đầu từ công cụ, mà từ <b>hệ thống tư duy</b>.  
+        Học cách nhìn toàn cảnh – từ dữ liệu, mô hình đến kiểm soát đầu ra.
+      </p>
+      <ul class="muted" style="margin:10px 0 0 18px">
+        <li>Phân tích cấu trúc hệ thống AI</li>
+        <li>Hiểu chuỗi Model → Data → Control</li>
+        <li>Tư duy phản hồi (Feedback Loop)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📊 AI Literacy & Decision</h3>
+      <p class="muted">
+        Làm chủ khái niệm cốt lõi: xác suất, bias, prompt, context, memory.  
+        Biết cách hỏi, hiểu, và kiểm định AI như một nhà lãnh đạo dữ liệu.
+      </p>
+      <ul class="muted" style="margin:10px 0 0 18px">
+        <li>Hiểu giới hạn và rủi ro mô hình</li>
+        <li>Thiết kế câu hỏi có kiểm soát</li>
+        <li>Phân biệt tín hiệu và nhiễu</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>💼 AI in Business System</h3>
+      <p class="muted">
+        Biến AI thành năng lực vận hành:  
+        đo lường, tối ưu và nhân bản quy trình làm việc thông minh.
+      </p>
+      <ul class="muted" style="margin:10px 0 0 18px">
+        <li>Xây workflow tự động hóa</li>
+        <li>Quản trị dữ liệu vận hành</li>
+        <li>Tối ưu chi phí và tốc độ ra quyết định</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" class="section">
+  <div class="container">
+    <h2 style="font-size:clamp(22px,4.2vw,34px); margin-bottom:8px">Lộ trình 4 tuần · 12 buổi</h2>
+    <p class="muted">Mỗi tuần là một chu kỳ: Hiểu – Phân tích – Thiết kế – Kiểm soát.</p>
+    <div class="timeline" style="margin-top:18px">
+      <div class="row"><div class="badge">Tuần 1</div>
+        <div class="grid" style="grid-template-columns:12px 1fr">
+          <div class="dot"></div><div class="card"><b>Buổi 1:</b> Tư duy hệ thống & vai trò của AI trong cấu trúc doanh nghiệp.</div>
+          <div></div><div class="card"><b>Buổi 2:</b> Model – Data – Control: hiểu bản chất và giới hạn.</div>
+          <div></div><div class="card"><b>Buổi 3:</b> Prompt Engineering & kiểm soát đầu ra.</div>
+        </div>
+      </div>
+      <div class="row"><div class="badge">Tuần 2</div>
+        <div class="grid" style="grid-template-columns:12px 1fr">
+          <div class="dot"></div><div class="card"><b>Buổi 4:</b> Automation workflow cá nhân và nhóm.</div>
+          <div></div><div class="card"><b>Buổi 5:</b> Ứng dụng AI trong đo lường và dashboard.</div>
+          <div></div><div class="card"><b>Buổi 6:</b> Kiểm toán và bảo mật dữ liệu.</div>
+        </div>
+      </div>
+      <div class="row"><div class="badge">Tuần 3</div>
+        <div class="grid" style="grid-template-columns:12px 1fr">
+          <div class="dot"></div><div class="card"><b>Buổi 7:</b> AI for growth – tự động hóa funnel & content.</div>
+          <div></div><div class="card"><b>Buổi 8:</b> Thiết kế hệ thống phản hồi tự học (feedback loop).</div>
+          <div></div><div class="card"><b>Buổi 9:</b> Quy trình kiểm định chất lượng mô hình.</div>
+        </div>
+      </div>
+      <div class="row"><div class="badge">Tuần 4</div>
+        <div class="grid" style="grid-template-columns:12px 1fr">
+          <div class="dot"></div><div class="card"><b>Buổi 10:</b> Dự án thực tế & phân tích rủi ro.</div>
+          <div></div><div class="card"><b>Buổi 11:</b> Báo cáo dữ liệu & KPI vận hành.</div>
+          <div></div><div class="card"><b>Buổi 12:</b> Demo – Audit – Launch có kiểm soát.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="outcome" class="section">
+  <div class="container grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+    <div class="card">
+      <h3>🎯 Kết quả cá nhân</h3>
+      <ul class="muted" style="margin:10px 0 0 18px">
+        <li>Hiểu cơ chế hoạt động của mô hình AI & quy trình dữ liệu.</li>
+        <li>Xây 01 chatbot phản hồi đúng vai trò – hiểu ngữ cảnh thật.</li>
+        <li>Tạo 01 workflow tự động hoá công việc thật (Zapier/Make).</li>
+        <li>Biết thiết kế prompt chuẩn doanh nghiệp & đo hiệu quả.</li>
+        <li>Hiểu cách kiểm soát Model–Data–Control trong hệ thống.</li>
+        <li>Triển khai an toàn (NDA, log, token, access control).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📦 Resource & Control</h3>
+      <ul class="muted" style="margin:10px 0 0 18px">
+        <li>12 project template · 100+ prompt theo ngành.</li>
+        <li>Checklist bảo mật & đánh giá rủi ro mô hình.</li>
+        <li>Template dashboard KPI và báo cáo vận hành.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🔒 Bảo mật & NDA</h3>
+      <p class="muted">
+        Toàn bộ tài liệu thuộc bản quyền HYPER ONE.  
+        Chỉ sử dụng nội bộ theo NDA, cấm chia sẻ hoặc tái bản dưới mọi hình thức.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">HYPER ONE • System-first & Human-centered</div>
+  <div class="watermark">CONFIDENTIAL • INTERNAL USE ONLY • HYPER ONE</div>
+</footer>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/lock.js"></script>
+</body>
+</html>

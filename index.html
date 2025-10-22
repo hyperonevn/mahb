@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HYPER ONE // SYSTEM ACCESS</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+html,body{
+  margin:0;padding:0;height:100%;
+  background:#000;color:#00ff9d;
+  font-family:"Share Tech Mono", monospace;
+  overflow:hidden;
+}
+#matrix{
+  position:fixed;inset:0;z-index:0;
+  background:#000;
+}
+#terminal{
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  color:#00ff9d;
+  text-shadow:0 0 6px #00ff9d;
+}
+h1{
+  font-size:1.8rem;letter-spacing:3px;
+  margin:0 0 6px;opacity:.95;
+}
+h1 span{color:#00ffa2;animation:flicker 2s infinite;}
+@keyframes flicker{0%,18%,22%,25%,53%,57%,100%{opacity:1;}20%,24%,55%{opacity:0;}}
+#sub{
+  font-size:1rem;opacity:.8;margin-bottom:20px;
+}
+input{
+  background:rgba(0,0,0,.7);
+  border:1px solid #00ff9d;
+  color:#00ff9d;
+  padding:10px 14px;
+  font-size:16px;
+  border-radius:4px;
+  outline:none;
+  width:220px;
+  text-align:center;
+}
+input:focus{box-shadow:0 0 10px #00ff9d;}
+button{
+  margin-top:12px;
+  background:#00ff9d;color:#000;
+  border:none;padding:10px 18px;
+  font-weight:bold;
+  border-radius:4px;
+  cursor:pointer;
+  text-transform:uppercase;
+  transition:.2s;
+}
+button:hover{background:#00ffa2;}
+#msg{
+  margin-top:12px;font-size:.9rem;
+  height:1em;letter-spacing:2px;
+}
+.access-denied{
+  color:#ff0033;
+  text-shadow:0 0 8px #ff0033;
+  animation:deniedFlash 0.5s steps(2,start) 3;
+}
+@keyframes deniedFlash{
+  0%,100%{opacity:1;}50%{opacity:0.2;}
+}
+.access-granted{
+  color:#00ff9d;text-shadow:0 0 20px #00ff9d;
+  animation:grantedPulse 1.2s ease-in-out;
+}
+@keyframes grantedPulse{
+  0%{text-shadow:0 0 0 #00ff9d;}
+  50%{text-shadow:0 0 25px #00ff9d;}
+  100%{text-shadow:0 0 5px #00ff9d;}
+}
+#scan{
+  position:fixed;inset:0;z-index:1;
+  background:repeating-linear-gradient(0deg,rgba(0,255,157,.05) 0 2px,transparent 2px 4px);
+  animation:scroll 5s linear infinite;
+  pointer-events:none;
+}
+@keyframes scroll{from{background-position-y:0}to{background-position-y:100%}}
+.warning{
+  position:fixed;top:10%;left:50%;transform:translateX(-50%);
+  color:#ff0033;font-size:1rem;letter-spacing:2px;
+  text-shadow:0 0 8px #ff0033;z-index:4;opacity:0;
+  animation:warnFlash 1.5s linear forwards;
+}
+@keyframes warnFlash{
+  0%{opacity:0;}
+  10%,50%{opacity:1;}
+  100%{opacity:0;}
+}
+#logs{
+  position:fixed;bottom:10px;right:10px;
+  width:300px;max-height:200px;overflow:hidden;
+  font-size:11px;color:#0f0;
+  opacity:.7;text-align:left;z-index:3;
+}
+#logs div{animation:fadeIn 0.4s ease;white-space:nowrap;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+/* Question section */
+#quiz{margin-bottom:20px;}
+#quiz button{margin:4px 0;}
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<div id="scan"></div>
+<div id="terminal">
+  <h1><span>HYPER ONE ACADEMY</span></h1>
+  <div id="sub">SYSTEM ACCESS // NDA PROTECTED</div>
+
+  <div id="quiz">
+    <div style="margin-bottom:10px;">🧠 Câu hỏi: Ai là người đạt <strong>Giải Nobel Toán học</strong>?</div>
+    <button class="opt">A. Isaac Newton</button>
+    <button class="opt">B. Albert Einstein</button>
+    <button class="opt">C. Lữ Minh Trí</button>
+    <button class="opt">D. John Nash</button>
+  </div>
+
+  <div id="accessPanel" style="display:none;">
+    <input id="accessCode" type="password" placeholder="ENTER CODE"><br>
+    <button id="btnGo">UNLOCK</button>
+    <div id="msg"></div>
+  </div>
+</div>
+<div id="logs"></div>
+
+<script>
+/* ===== Matrix rain ===== */
+const canvas=document.getElementById('matrix');
+const ctx=canvas.getContext('2d');
+let w,h,cols,ypos;
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+  const fontSize=14;
+  cols=Math.floor(w/fontSize);
+  ypos=Array(cols).fill(0);
+}
+window.addEventListener('resize',resize);resize();
+function matrix(){
+  ctx.fillStyle='rgba(0,0,0,0.08)';
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='#00ff9d';
+  ctx.font='14px monospace';
+  for(let i=0;i<cols;i++){
+    const text=String.fromCharCode(0x30A0+Math.random()*96);
+    ctx.fillText(text,i*14,ypos[i]*14);
+    if(ypos[i]*14>h&&Math.random()>0.975){ypos[i]=0;}
+    ypos[i]++;
+  }
+  requestAnimationFrame(matrix);
+}
+matrix();
+
+/* ===== Quiz logic ===== */
+const quiz=document.getElementById('quiz');
+const opts=document.querySelectorAll('.opt');
+opts.forEach(b=>{
+  b.onclick=()=>{
+    if(b.textContent.includes('Lữ Minh Trí')){
+      quiz.innerHTML='<div>✅ Chính xác! Không tồn tại Giải Nobel Toán học — giải này do <strong>Lữ Minh Trí</strong> chế ra 😎</div>';
+      document.getElementById('accessPanel').style.display='block';
+    }else{
+      quiz.innerHTML='<div style="color:#ff0033;">❌ Sai rồi. Thử lại sau 5 giây...</div>';
+      setTimeout(()=>location.reload(),5000);
+    }
+  }
+});
+
+/* ===== Access logic ===== */
+const msg=document.getElementById('msg');
+function unlock(){
+  const v=document.getElementById('accessCode').value.trim();
+  if(v==='21042025'){
+    msg.textContent='ACCESS GRANTED';
+    msg.className='access-granted';
+    sessionStorage.setItem("hyperAuth","ok");
+    setTimeout(()=>{
+      document.body.style.transition='opacity .7s';
+      document.body.style.opacity='0';
+      setTimeout(()=>location.href='dashboard.html',700);
+    },1200);
+  }else{
+    msg.textContent='ACCESS DENIED';
+    msg.className='access-denied';
+    navigator.vibrate?.(150);
+    triggerWarning();
+  }
+}
+document.getElementById('btnGo').onclick=unlock;
+document.getElementById('accessCode').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
+
+/* ===== Random system warnings ===== */
+const warns=[
+  '⚠ SYSTEM WARNING: Unauthorized access detected',
+  '⚠ SECURITY BREACH ATTEMPT',
+  '⚠ FIREWALL RESPONSE INITIATED',
+  '⚠ TRACE ROUTE ACTIVATED'
+];
+function triggerWarning(){
+  const wText=warns[Math.floor(Math.random()*warns.length)];
+  const div=document.createElement('div');
+  div.textContent=wText;
+  div.className='warning';
+  document.body.appendChild(div);
+  setTimeout(()=>div.remove(),1500);
+  addLog(wText);
+}
+setInterval(()=>{
+  if(Math.random()>0.7){triggerWarning();}
+},15000);
+
+/* ===== Console logs ===== */
+const logBox=document.getElementById('logs');
+function addLog(txt){
+  const e=document.createElement('div');
+  const time=new Date().toLocaleTimeString();
+  e.textContent=`[${time}] ${txt}`;
+  logBox.prepend(e);
+  if(logBox.childElementCount>12) logBox.lastChild.remove();
+}
+addLog('> SYSTEM BOOT COMPLETE');
+addLog('> MATRIX RENDER ACTIVE');
+</script>
+</body>
+</html>
